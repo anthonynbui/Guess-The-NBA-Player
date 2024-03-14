@@ -1,0 +1,21 @@
+.Header {
+  background-color: #be0000;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+
+/* .Header-title {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    /* margin-left: 70px; 
+    color: #495879;
+    margin: 10px 0px 10px -80px;
+  } */

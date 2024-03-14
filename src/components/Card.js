@@ -15,7 +15,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/auth";
 import { Autocomplete, TextField } from "@mui/material";
-import mystery_player from './mystery_player.png';
+import mystery_player from "./mystery_player.png";
+import "./Card.css"; // Import the CSS file
 
 function Card() {
   const [rendered, setRendered] = useState(false);
@@ -69,34 +70,34 @@ function Card() {
   const handleHint1Click = () => {
     setHint1Clicked(true);
     decrementScore();
-  }
+  };
 
   const handleHint2Click = () => {
     setHint2Clicked(true);
     decrementScore();
-  }
+  };
 
   const handleHint3Click = () => {
     setHint3Clicked(true);
     decrementScore();
-  }
+  };
 
   const handleHint4Click = () => {
     setHint4Clicked(true);
     decrementScore();
-  }
+  };
 
   const handlePlayerChange = (event, value) => {
     setSelectedPlayer(value);
 
     if (value === player.name) {
-      console.log("Correct guess")
+      console.log("Correct guess");
       resetPlayers();
       addScore(scoreToAdd);
       setScoreToAdd(5);
       setGuesses(3);
     } else {
-      console.log("Incorrect guess")
+      console.log("Incorrect guess");
       decrementGuess();
     }
   };
@@ -111,12 +112,12 @@ function Card() {
 
   const addScore = () => {
     setScore(score + scoreToAdd);
-  }
+  };
 
   function resetPlayers() {
     // Set reveal to true to show the player
     setReveal(true);
-  
+
     // After 3 seconds, hide the player, get new player, and reset guesses
     setTimeout(() => {
       setReveal(false); // Hide the player
@@ -124,7 +125,6 @@ function Card() {
       setGuesses(3); // Reset guesses
     }, 3000);
   }
-  
 
   useEffect(() => {
     getPlayers();
@@ -141,46 +141,112 @@ function Card() {
   }, [player]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-      <h1>Guess the NBA Player</h1>
+    <div className="card-container">
       <div>
-        <h5>Score: {score}</h5>
-        <h5>Guesses: {guesses}</h5>
+        <h5 className="card-score">Score: {score}</h5>
+        <h5 className="card-guesses">Guesses: {guesses}</h5>
       </div>
-      <div style={{ marginBottom: "10px" }}>
+      <div className="card-autocomplete">
         <Autocomplete
           disablePortal
           id="nba-player-guess"
           options={getPlayerList()}
-          sx={{ paddingLeft: "40px", width: 300 }}
+          sx={{ paddingLeft: "40px", width: 300, }}
           onChange={handlePlayerChange}
           renderInput={(params) => <TextField {...params} label="NBA Player" />}
         />
+      </div>
+      <div>
         {reveal ? (
-          <img src={player.image_url} width="400" alt="Player" />
+          <img src={player.image_url} className="card-image" alt="Player" />
         ) : (
-          <img src={mystery_player} width="400" alt="MysteryPlayer" />
+          <img
+            src={mystery_player}
+            className="card-image"
+            alt="MysteryPlayer"
+          />
         )}
       </div>
-      {/* <div>
-        <Button variant="contained" onClick={getPlayers}>Randomize Player</Button>
-      </div> */}
       {rendered ? (
-        <div style={{ marginTop: "10px" }}>
+        <div className="hint-button-container">
           <div>
-            {hint1Clicked ? (<Button variant="contained" onClick={handleHint1Click} size="large">Position: {player.position}</Button>) : (<Button variant="contained" onClick={handleHint1Click} size="large">Hint 1</Button>)}
+            {hint1Clicked ? (
+              <Button
+                variant="contained"
+                onClick={handleHint1Click}
+                size="large"
+                className="hint-button"
+              >
+                Position: {player.position}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleHint1Click}
+                size="large"
+                className="hint-button"
+              >
+                Hint 1
+              </Button>
+            )}
           </div>
           <div>
-          {hint2Clicked ? (<Button variant="contained" onClick={handleHint2Click} size="large">PPG: {(parseFloat(player.pts) / parseFloat(player.gp)).toFixed(1)}</Button>
-) : (
-  <Button variant="contained" onClick={handleHint2Click} size="large">Hint 2</Button>
-)}
+            {hint2Clicked ? (
+              <Button
+                variant="contained"
+                onClick={handleHint2Click}
+                size="large"
+              >
+                PPG:{" "}
+                {(parseFloat(player.pts) / parseFloat(player.gp)).toFixed(1)}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleHint2Click}
+                size="large"
+              >
+                Hint 2
+              </Button>
+            )}
           </div>
           <div>
-            {hint3Clicked ? (<Button variant="contained" onClick={handleHint3Click} size="large">Height: {player.height}</Button>) : (<Button variant="contained" onClick={handleHint3Click} size="large">Hint 3</Button>)}
+            {hint3Clicked ? (
+              <Button
+                variant="contained"
+                onClick={handleHint3Click}
+                size="large"
+              >
+                Height: {player.height}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleHint3Click}
+                size="large"
+              >
+                Hint 3
+              </Button>
+            )}
           </div>
           <div>
-            {hint4Clicked ? (<Button variant="contained" onClick={handleHint4Click} size="large">Height: {player.team}</Button>) : (<Button variant="contained" onClick={handleHint4Click} size="large">Hint 4</Button>)}
+            {hint4Clicked ? (
+              <Button
+                variant="contained"
+                onClick={handleHint4Click}
+                size="large"
+              >
+                Team: {player.team}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleHint4Click}
+                size="large"
+              >
+                Hint 4
+              </Button>
+            )}
           </div>
         </div>
       ) : null}
