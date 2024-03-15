@@ -30,7 +30,6 @@ function Card() {
   const [hint1Clicked, setHint1Clicked] = useState(false);
   const [hint2Clicked, setHint2Clicked] = useState(false);
   const [hint3Clicked, setHint3Clicked] = useState(false);
-  const [hint4Clicked, setHint4Clicked] = useState(false);
   const [reveal, setReveal] = useState(false);
   const playerCollectionsRef = collection(db, "nba-players");
 
@@ -61,7 +60,6 @@ function Card() {
       setHint1Clicked(false);
       setHint2Clicked(false);
       setHint3Clicked(false);
-      setHint4Clicked(false);
     } catch (err) {
       console.log(err);
     }
@@ -82,10 +80,6 @@ function Card() {
     decrementScore();
   };
 
-  const handleHint4Click = () => {
-    setHint4Clicked(true);
-    decrementScore();
-  };
 
   const handlePlayerChange = (event, value) => {
     setSelectedPlayer(value);
@@ -103,8 +97,8 @@ function Card() {
   };
 
   const decrementScore = () => {
-    setScoreToAdd(scoreToAdd - 1);
-  };
+    setScoreToAdd((prevScore) => Math.max(prevScore - 1, 0)); // Ensure scoreToAdd doesn't go below 0
+  };  
 
   const decrementGuess = () => {
     setGuesses(guesses - 1);
@@ -123,7 +117,7 @@ function Card() {
       setReveal(false); // Hide the player
       getPlayers(); // Get a new player
       setGuesses(3); // Reset guesses
-    }, 3000);
+    }, 5000);
   }
 
   useEffect(() => {
@@ -144,8 +138,9 @@ function Card() {
     <div className="card-container">
       <div>
         <h5 className="card-score">Score: {score}</h5>
-        <h5 className="card-guesses">Guesses: {guesses}</h5>
+        <h5 className="card-guesses">Guesses: {guesses} </h5>
       </div>
+      {reveal && <h2>{playerName}</h2>} {/* Reveal player name */}
       <div className="card-autocomplete">
         <Autocomplete
           disablePortal
@@ -170,8 +165,7 @@ function Card() {
       {rendered ? (
         <div className="hint-button-container">
           <div>
-            {hint1Clicked ? (
-              <Button
+          <Button
                 variant="contained"
                 onClick={handleHint1Click}
                 size="large"
@@ -179,12 +173,31 @@ function Card() {
               >
                 Position: {player.position}
               </Button>
+          </div>
+          <div>
+          <Button
+                variant="contained"
+                onClick={handleHint2Click}
+                size="large"
+              >
+                PPG:{" "}
+                {(parseFloat(player.pts) / parseFloat(player.gp)).toFixed(1)}
+              </Button>
+          </div>
+          <div>
+            {hint1Clicked ? (
+              <Button
+                variant="contained"
+                onClick={handleHint1Click}
+                size="large"
+              >
+                Height: {player.height}
+              </Button>
             ) : (
               <Button
                 variant="contained"
                 onClick={handleHint1Click}
                 size="large"
-                className="hint-button"
               >
                 Hint 1
               </Button>
@@ -197,8 +210,7 @@ function Card() {
                 onClick={handleHint2Click}
                 size="large"
               >
-                PPG:{" "}
-                {(parseFloat(player.pts) / parseFloat(player.gp)).toFixed(1)}
+                Year Drafted: {player.draft_year}
               </Button>
             ) : (
               <Button
@@ -209,15 +221,16 @@ function Card() {
                 Hint 2
               </Button>
             )}
+            
           </div>
           <div>
-            {hint3Clicked ? (
+          {hint3Clicked ? (
               <Button
                 variant="contained"
                 onClick={handleHint3Click}
                 size="large"
               >
-                Height: {player.height}
+                Team: {player.team}
               </Button>
             ) : (
               <Button
@@ -228,26 +241,7 @@ function Card() {
                 Hint 3
               </Button>
             )}
-          </div>
-          <div>
-            {hint4Clicked ? (
-              <Button
-                variant="contained"
-                onClick={handleHint4Click}
-                size="large"
-              >
-                Team: {player.team}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={handleHint4Click}
-                size="large"
-              >
-                Hint 4
-              </Button>
-            )}
-          </div>
+            </div>
         </div>
       ) : null}
     </div>
