@@ -37,6 +37,7 @@ function Card() {
   const [incorrect, setIncorrect] = useState(false);
   const [reveal, setReveal] = useState(false);
   const playerCollectionsRef = collection(db, "nba-players");
+  const [incorrectGuess, setIncorrectGuess] = useState(false);
 
   function getRandomNumber() {
     // Generate a random number between 0 (inclusive) and 1 (exclusive)
@@ -85,10 +86,9 @@ function Card() {
     decrementScore();
   };
 
-
   const handlePlayerChange = (event, value) => {
     setSelectedPlayer(value);
-
+  
     if (value === player.name) {
       console.log("Correct guess");
       resetPlayers();
@@ -100,8 +100,14 @@ function Card() {
       console.log("Incorrect guess");
       setIncorrect(true);
       decrementGuess();
+      setIncorrectGuess(true); // Set incorrectGuess to true
     }
+
+    setTimeout(() => {
+      setIncorrectGuess(false);
+    }, 400);
   };
+  
 
   const decrementScore = () => {
     setScoreToAdd((prevScore) => Math.max(prevScore - 1, 0)); // Ensure scoreToAdd doesn't go below 0
@@ -130,10 +136,15 @@ function Card() {
       setReveal(false); // Hide the player
       setCorrect(false);
       setIncorrect(false);
+      setIncorrectGuess(false);
       getPlayers(); // Get a new player
       setGuesses(3); // Reset guesses
     }, 5000);
   }
+
+  useEffect(() => {
+    document.title = "Guess The NBA Player";
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
   useEffect(() => {
     getPlayers();
@@ -154,7 +165,9 @@ function Card() {
     <div className="card-container">
     <div>
       <h5 className="card-score">Score: {score}</h5>
-      <h5 className="card-guesses">Guesses: {guesses} </h5>
+      <h5 className={`card-guesses ${incorrectGuess ? "shake" : ""}`}>
+          Guesses: {guesses}
+        </h5>
     </div>
     <div>
       {reveal ? (
