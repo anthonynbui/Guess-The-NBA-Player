@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPlayerList } from "../api/utils";
+import { getPlayerList } from "../../api/utils";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import {
@@ -13,13 +13,13 @@ import {
   orderBy,
   limit,
 } from "firebase/firestore";
-import { db } from "../config/auth";
+import { db } from "../../config/auth";
 import { Autocomplete, TextField } from "@mui/material";
-import mystery_player from "./mystery_player.png";
 import "./Card.css"; // Import the CSS file
 import { createTheme } from '@mui/material/styles';
-import green_check from "./green_check.png";
-import red_x from "./red_x.png";
+import mystery_player from "../../assets/mystery_player.png";
+import green_check from "../../assets/green_check.png";
+import red_x from "../../assets/red_x.png";
 
 function Card() {
   const [rendered, setRendered] = useState(false);

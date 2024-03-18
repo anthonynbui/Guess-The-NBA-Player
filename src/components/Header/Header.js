@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Popover, Typography } from "@mui/material";
 import "./Header.css";
-import nba_logo from "./nba_logo.png";
+import nba_logo from "../../assets/nba_logo.png";
 
 function Header() {
   const [aboutPopover, setAboutPopover] = useState(null);
