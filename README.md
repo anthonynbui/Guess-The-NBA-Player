@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# Guess The NBA Player
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Guess The NBA Player is a fun game where you try to guess the name of a hidden NBA player based on hints and clues provided.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Random NBA Player**: Each time you play, a random NBA player is selected for you to guess.
+- **Hints**: You can use hints such as position, points per game (PPG), height, draft year, and current team to help you guess the player's name.
+- **Scoring**: Earn points for each correct guess and try to achieve the highest score possible.
+- **Limited Guesses**: You have a limited number of guesses for each player, so use them wisely.
+- **Animations**: Enjoy subtle animations to enhance your gaming experience.
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To get started with Guess The NBA Player, I am hosting it with Github Pages at https://anthonynbui.github.io/Guess-The-NBA-Player/
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# OR
 
-### `npm test`
+You can follow these steps to run it locally.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone this repository to your local machine.
+2. Install the necessary dependencies by running `npm install`.
+3. Start the application by running `npm start`.
+4. Open your browser and navigate to `http://localhost:3000` to play the game.
 
-### `npm run build`
+## Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- React: A JavaScript library for building user interfaces.
+- Material-UI: A popular React UI framework for building responsive and customizable components.
+- Firebase: A platform for building web and mobile applications, providing services such as Firestore for database management.
+- Axios: A promise-based HTTP client for making requests to external APIs.
+- CSS: Cascading Style Sheets for styling the application.
+- JavaScript: The programming language used to add interactivity and functionality to the game.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Acknowledgements
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Thanks to NBA_API `https://github.com/swar/nba_api` for providing player data.
+- Built by Anthony Bui
