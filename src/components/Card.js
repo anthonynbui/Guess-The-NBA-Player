@@ -17,6 +17,9 @@ import { db } from "../config/auth";
 import { Autocomplete, TextField } from "@mui/material";
 import mystery_player from "./mystery_player.png";
 import "./Card.css"; // Import the CSS file
+import { createTheme } from '@mui/material/styles';
+import green_check from "./green_check.png";
+import red_x from "./red_x.png";
 
 function Card() {
   const [rendered, setRendered] = useState(false);
@@ -30,6 +33,8 @@ function Card() {
   const [hint1Clicked, setHint1Clicked] = useState(false);
   const [hint2Clicked, setHint2Clicked] = useState(false);
   const [hint3Clicked, setHint3Clicked] = useState(false);
+  const [correct, setCorrect] = useState(false);
+  const [incorrect, setIncorrect] = useState(false);
   const [reveal, setReveal] = useState(false);
   const playerCollectionsRef = collection(db, "nba-players");
 
@@ -87,11 +92,13 @@ function Card() {
     if (value === player.name) {
       console.log("Correct guess");
       resetPlayers();
+      setCorrect(true);
       addScore(scoreToAdd);
       setScoreToAdd(5);
       setGuesses(3);
     } else {
       console.log("Incorrect guess");
+      setIncorrect(true);
       decrementGuess();
     }
   };
@@ -106,15 +113,23 @@ function Card() {
 
   const addScore = () => {
     setScore(score + scoreToAdd);
+    const scoreElement = document.querySelector(".card-score");
+    scoreElement.classList.add("increase-score-animation");
+    setTimeout(() => {
+      scoreElement.classList.remove("increase-score-animation");
+    }, 500);
   };
+  
 
   function resetPlayers() {
     // Set reveal to true to show the player
     setReveal(true);
 
-    // After 3 seconds, hide the player, get new player, and reset guesses
+    // After 5 seconds, hide the player, get new player, and reset guesses
     setTimeout(() => {
       setReveal(false); // Hide the player
+      setCorrect(false);
+      setIncorrect(false);
       getPlayers(); // Get a new player
       setGuesses(3); // Reset guesses
     }, 5000);
@@ -134,117 +149,119 @@ function Card() {
     console.log(player.name);
   }, [player]);
 
+
   return (
     <div className="card-container">
-      <div>
-        <h5 className="card-score">Score: {score}</h5>
-        <h5 className="card-guesses">Guesses: {guesses} </h5>
-      </div>
-      {reveal && <h2>{playerName}</h2>} {/* Reveal player name */}
-      <div className="card-autocomplete">
-        <Autocomplete
-          disablePortal
-          id="nba-player-guess"
-          options={getPlayerList()}
-          sx={{ paddingLeft: "40px", width: 300, }}
-          onChange={handlePlayerChange}
-          renderInput={(params) => <TextField {...params} label="NBA Player" />}
-        />
-      </div>
-      <div>
-        {reveal ? (
-          <img src={player.image_url} className="card-image" alt="Player" />
-        ) : (
-          <img
-            src={mystery_player}
-            className="card-image"
-            alt="MysteryPlayer"
-          />
-        )}
-      </div>
-      {rendered ? (
-        <div className="hint-button-container">
-          <div>
-          <Button
-                variant="contained"
-                onClick={handleHint1Click}
-                size="large"
-                className="hint-button"
-              >
-                Position: {player.position}
-              </Button>
-          </div>
-          <div>
-          <Button
-                variant="contained"
-                onClick={handleHint2Click}
-                size="large"
-              >
-                PPG:{" "}
-                {(parseFloat(player.pts) / parseFloat(player.gp)).toFixed(1)}
-              </Button>
-          </div>
-          <div>
-            {hint1Clicked ? (
-              <Button
-                variant="contained"
-                onClick={handleHint1Click}
-                size="large"
-              >
-                Height: {player.height}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={handleHint1Click}
-                size="large"
-              >
-                Hint 1
-              </Button>
-            )}
-          </div>
-          <div>
-            {hint2Clicked ? (
-              <Button
-                variant="contained"
-                onClick={handleHint2Click}
-                size="large"
-              >
-                Year Drafted: {player.draft_year}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={handleHint2Click}
-                size="large"
-              >
-                Hint 2
-              </Button>
-            )}
-            
-          </div>
-          <div>
-          {hint3Clicked ? (
-              <Button
-                variant="contained"
-                onClick={handleHint3Click}
-                size="large"
-              >
-                Team: {player.team}
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={handleHint3Click}
-                size="large"
-              >
-                Hint 3
-              </Button>
-            )}
-            </div>
-        </div>
+    <div>
+      <h5 className="card-score">Score: {score}</h5>
+      <h5 className="card-guesses">Guesses: {guesses} </h5>
+    </div>
+    <div>
+      {reveal ? (
+        <>
+<h2 className={reveal ? "player-name" : "hidden"}>
+  <img src={correct ? green_check : red_x} width="50px" alt={correct ? "Correct" : "Incorrect"} />
+  {playerName}
+</h2>
+
+        </>
       ) : null}
     </div>
+  
+    <div className="card-autocomplete">
+      <img
+        src={reveal ? player.image_url : mystery_player}
+        className="card-image"
+        alt={reveal ? "Player" : "MysteryPlayer"}
+      />
+      <Autocomplete
+        disablePortal
+        id="nba-player-guess"
+        options={getPlayerList()}
+        sx={{ paddingLeft: "40px", width: 300 }}
+        onChange={handlePlayerChange}
+        renderInput={(params) => <TextField {...params} label="Guess Player" />}
+      />
+    </div>
+  
+    {rendered ? (
+      <div className="hint-button-container">
+        <div>
+          <Button
+            variant="contained"
+            size="large"
+            className="hint-button"
+          >
+            Position: {player.position}
+          </Button>
+        </div>
+        <div>
+          <Button variant="contained" size="large">
+            PPG: {(parseFloat(player.pts) / parseFloat(player.gp)).toFixed(1)}
+          </Button>
+        </div>
+        <div>
+          {hint1Clicked ? (
+            <Button
+              variant="contained"
+              onClick={handleHint1Click}
+              size="large"
+            >
+              Height: {player.height}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={handleHint1Click}
+              size="large"
+              sx={{ bgcolor: "ochre.main" }}
+            >
+              Hint 1
+            </Button>
+          )}
+        </div>
+        <div>
+          {hint2Clicked ? (
+            <Button
+              variant="contained"
+              onClick={handleHint2Click}
+              size="large"
+            >
+              Year Drafted: {player.draft_year}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={handleHint2Click}
+              size="large"
+            >
+              Hint 2
+            </Button>
+          )}
+        </div>
+        <div>
+          {hint3Clicked ? (
+            <Button
+              variant="contained"
+              onClick={handleHint3Click}
+              size="large"
+            >
+              Current Team: {player.team}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={handleHint3Click}
+              size="large"
+            >
+              Hint 3
+            </Button>
+          )}
+        </div>
+      </div>
+    ) : null}
+  </div>
+  
   );
 }
 
