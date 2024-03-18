@@ -14,7 +14,7 @@ Guess The NBA Player is a fun game where you try to guess the name of a hidden N
 
 To get started with Guess The NBA Player, I am hosting it with Github Pages at https://anthonynbui.github.io/Guess-The-NBA-Player/
 
-# OR
+## OR
 
 You can follow these steps to run it locally.
 
