@@ -36,7 +36,7 @@ function Card() {
   const [correct, setCorrect] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
   const [reveal, setReveal] = useState(false);
-  const playerCollectionsRef = collection(db, "nba-players");
+  const playerCollectionsRef = collection(db, "test-players");
   const [incorrectGuess, setIncorrectGuess] = useState(false);
 
   function getRandomNumber() {
