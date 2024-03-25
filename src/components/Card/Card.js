@@ -43,8 +43,8 @@ function Card() {
     // Generate a random number between 0 (inclusive) and 1 (exclusive)
     const randomNumber = Math.random();
 
-    // Scale the random number to the range of 1 to 513
-    const scaledNumber = Math.floor(randomNumber * 453) + 1;
+    // Scale the random number to the range of 1 to 326
+    const scaledNumber = Math.floor(randomNumber * 326) + 1;
 
     return scaledNumber;
   }
@@ -139,6 +139,7 @@ function Card() {
       setIncorrectGuess(false);
       getPlayers(); // Get a new player
       setGuesses(3); // Reset guesses
+      setScoreToAdd(5);
     }, 5000);
   }
 
@@ -174,7 +175,7 @@ function Card() {
         <>
 <h2 className={reveal ? "player-name" : "hidden"}>
   <img src={correct ? green_check : red_x} width="50px" alt={correct ? "Correct" : "Incorrect"} />
-  {playerName}
+  {player.name}
 </h2>
 
         </>
@@ -205,7 +206,7 @@ function Card() {
             size="large"
             className="hint-button"
           >
-            Position: {player.position}
+        Position: {player?.position || "Unknown"}
           </Button>
         </div>
         <div>
