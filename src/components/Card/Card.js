@@ -38,6 +38,7 @@ function Card() {
   const [reveal, setReveal] = useState(false);
   const playerCollectionsRef = collection(db, "test-players");
   const [incorrectGuess, setIncorrectGuess] = useState(false);
+  const [animateScore, setAnimateScore] = useState(false);
 
   function getRandomNumber() {
     // Generate a random number between 0 (inclusive) and 1 (exclusive)
@@ -119,11 +120,7 @@ function Card() {
 
   const addScore = () => {
     setScore(score + scoreToAdd);
-    const scoreElement = document.querySelector(".card-score");
-    scoreElement.classList.add("increase-score-animation");
-    setTimeout(() => {
-      scoreElement.classList.remove("increase-score-animation");
-    }, 500);
+    setAnimateScore(true); // Set state to trigger animation
   };
   
 
@@ -158,6 +155,14 @@ function Card() {
   }, [guesses]);
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAnimateScore(false);
+    }, 500); // Adjust this delay to match the animation duration
+  
+    return () => clearTimeout(timeout);
+  }, [animateScore]);
+
+  useEffect(() => {
     console.log(player.name);
   }, [player]);
 
@@ -165,7 +170,7 @@ function Card() {
   return (
     <div className="card-container">
     <div>
-      <h5 className="card-score">Score: {score}</h5>
+    <h5 className={`card-score ${animateScore ? "increase-score-animation" : ""}`}>Score: {score}</h5>
       <h5 className={`card-guesses ${incorrectGuess ? "shake" : ""}`}>
           Guesses: {guesses}
         </h5>
