@@ -49,6 +49,10 @@
   .Button {
     color: black;
   }
+
+  .hint-not-clicked {
+    color: grey;
+  }
   
   @keyframes fadeIn {
     from {
