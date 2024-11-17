@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/Guess-The-NBA-Player/static/css/main.491f6dc6.css",
-    "main.js": "/Guess-The-NBA-Player/static/js/main.0e5620f6.js",
+    "main.css": "/Guess-The-NBA-Player/static/css/main.f71b6a93.css",
+    "main.js": "/Guess-The-NBA-Player/static/js/main.bfacf627.js",
     "static/js/453.c91d3436.chunk.js": "/Guess-The-NBA-Player/static/js/453.c91d3436.chunk.js",
     "static/media/mystery_player.png": "/Guess-The-NBA-Player/static/media/mystery_player.22f00bb46b4257baed8a.png",
     "static/media/red_x.png": "/Guess-The-NBA-Player/static/media/red_x.45a9c2c418ee7893b8c9.png",
     "static/media/green_check.png": "/Guess-The-NBA-Player/static/media/green_check.ddfa472eaf8535956950.png",
     "index.html": "/Guess-The-NBA-Player/index.html",
-    "main.491f6dc6.css.map": "/Guess-The-NBA-Player/static/css/main.491f6dc6.css.map",
-    "main.0e5620f6.js.map": "/Guess-The-NBA-Player/static/js/main.0e5620f6.js.map",
+    "main.f71b6a93.css.map": "/Guess-The-NBA-Player/static/css/main.f71b6a93.css.map",
+    "main.bfacf627.js.map": "/Guess-The-NBA-Player/static/js/main.bfacf627.js.map",
     "453.c91d3436.chunk.js.map": "/Guess-The-NBA-Player/static/js/453.c91d3436.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.491f6dc6.css",
-    "static/js/main.0e5620f6.js"
+    "static/css/main.f71b6a93.css",
+    "static/js/main.bfacf627.js"
   ]
 }
