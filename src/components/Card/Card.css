@@ -53,6 +53,12 @@
   .hint-not-clicked {
     color: grey;
   }
+
+  .hint-count-text {
+    font-size: 16px;
+    color: #9e9e9e;
+    padding-top: 20px;
+  }
   
   @keyframes fadeIn {
     from {

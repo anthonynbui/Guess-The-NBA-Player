@@ -28,6 +28,7 @@ function Card() {
   const [playerList, setPlayerList] = useState({});
   const [score, setScore] = useState(0);
   const [guesses, setGuesses] = useState(3);
+  const [hints, setHints] = useState(3);
   const [scoreToAdd, setScoreToAdd] = useState(5);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [hint1Clicked, setHint1Clicked] = useState(false);
@@ -75,40 +76,57 @@ function Card() {
       setHint4Clicked(false);
       setHint5Clicked(false);
       setHint6Clicked(false);
-
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleHint1Click = () => {
-    setHint1Clicked(true);
-    decrementScore();
+    if (hints > 0) {
+      setHint1Clicked(true);
+      decrementScore();
+      decrementHints();
+    }
   };
 
   const handleHint2Click = () => {
-    setHint2Clicked(true);
-    decrementScore();
+    if (hints > 0) {
+      setHint2Clicked(true);
+      decrementScore();
+      decrementHints();
+    }
   };
 
   const handleHint3Click = () => {
-    setHint3Clicked(true);
-    decrementScore();
+    if (hints > 0) {
+      setHint3Clicked(true);
+      decrementScore();
+      decrementHints();
+    }
   };
 
   const handleHint4Click = () => {
-    setHint4Clicked(true);
-    decrementScore();
+    if (hints > 0) {
+      setHint4Clicked(true);
+      decrementScore();
+      decrementHints();
+    }
   };
 
   const handleHint5Click = () => {
-    setHint5Clicked(true);
-    decrementScore();
+    if (hints > 0) {
+      setHint5Clicked(true);
+      decrementScore();
+      decrementHints();
+    }
   };
 
   const handleHint6Click = () => {
-    setHint6Clicked(true);
-    decrementScore();
+    if (hints > 0) {
+      setHint6Clicked(true);
+      decrementScore();
+      decrementHints();
+    }
   };
 
   const handlePlayerChange = (event, value, reason) => {
@@ -143,6 +161,12 @@ function Card() {
     setGuesses(guesses - 1);
   };
 
+  const decrementHints = () => {
+    if (hints > 0) {
+      setHints(hints - 1);
+    }
+  };
+
   const addScore = () => {
     setScore(score + scoreToAdd);
     setAnimateScore(true); // Set state to trigger animation
@@ -161,6 +185,7 @@ function Card() {
       getPlayers(); // Get a new player
       setGuesses(3); // Reset guesses
       setScoreToAdd(5);
+      setHints(3);
     }, 5000);
   }
 
@@ -316,7 +341,10 @@ function Card() {
               <Button variant="contained" size="large">
                 {player.draft_year === "Undrafted"
                   ? "Year Drafted: " + player.draft_year
-                  : "Year Drafted: " + player.draft_year + " Pick " + player.draft_number}
+                  : "Year Drafted: " +
+                    player.draft_year +
+                    " Pick " +
+                    player.draft_number}
               </Button>
             ) : (
               <Button
@@ -343,6 +371,7 @@ function Card() {
               </Button>
             )}
           </div>
+          <div className="hint-count-text">Hints: {hints}</div>
         </div>
       ) : null}
     </div>
