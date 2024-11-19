@@ -50,7 +50,7 @@ function Card() {
     const randomNumber = Math.random();
 
     // Scale the random number to the range of 1 to 326
-    const scaledNumber = Math.floor(randomNumber * 326) + 1;
+    const scaledNumber = Math.floor(randomNumber * 257) + 1;
 
     return scaledNumber;
   }
