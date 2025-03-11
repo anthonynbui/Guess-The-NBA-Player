@@ -1,10 +1,11 @@
 .Header {
   background-color: #be0000;
   width: 100%;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 10;
 }
 
 .Header h1 {
@@ -21,8 +22,8 @@
 
 .nba-logo {
   
-  width: 50px; /* Adjust the width as needed */
-  margin-right: 10px; /* Adjust the margin as needed */
+  width: 3%; /* Adjust the width as needed */
+  margin-right: 20px; /* Adjust the margin as needed */
 }
 
 

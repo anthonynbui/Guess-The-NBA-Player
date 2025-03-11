@@ -44,12 +44,14 @@ function Card() {
   const playerCollectionsRef = collection(db, "test-players");
   const [incorrectGuess, setIncorrectGuess] = useState(false);
   const [animateScore, setAnimateScore] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(59);
+
 
   function getRandomNumber() {
-    // Generate a random number between 0 (inclusive) and 1 (exclusive)
     const randomNumber = Math.random();
 
-    // Scale the random number to the range of 1 to 326
+    // random number from 1 to 257
     const scaledNumber = Math.floor(randomNumber * 257) + 1;
 
     return scaledNumber;
@@ -172,6 +174,26 @@ function Card() {
     setAnimateScore(true); // Set state to trigger animation
   };
 
+  const startTimer = () => {
+    setTimeLeft(59);
+    setGameStarted(true);
+    setScore(0);
+    setGuesses(3);
+    setCorrect(false);
+    setIncorrect(false);
+    getPlayers();
+
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime === 1) {
+          clearInterval(timer);
+          setGameStarted(false);
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+  };
+
   function resetPlayers() {
     // Set reveal to true to show the player
     setReveal(true);
@@ -193,9 +215,9 @@ function Card() {
     document.title = "Guess The NBA Player";
   }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
-  useEffect(() => {
-    getPlayers();
-  }, []);
+  // useEffect(() => {
+  //   getPlayers();
+  // }, []);
 
   useEffect(() => {
     if (guesses === 0) {
@@ -228,6 +250,14 @@ function Card() {
         <h5 className={`card-guesses ${incorrectGuess ? "shake" : ""}`}>
           Guesses: {guesses}
         </h5>
+        <div className="start-button">
+          {gameStarted ? <h2>0:{timeLeft}</h2>: (
+          <Button variant="contained" onClick={startTimer}>
+            Start
+          </Button>
+          ) 
+          }
+        </div>
       </div>
       <div>
         {reveal ? (
@@ -261,9 +291,16 @@ function Card() {
           )}
         />
       </div>
+      <div className="hint-count-text">Hints: {hints}</div>
+
 
       {rendered ? (
         <div className="hint-button-container">
+          <div>
+          <Button variant="contained" size="large">
+              Current Team: {player?.team || "Unknown"}
+            </Button>
+            </div>
           <div>
             <Button variant="contained" size="large">
               Position: {player?.position || "Unknown"}
@@ -322,21 +359,6 @@ function Card() {
             )}
           </div>
           <div>
-            {hint4Clicked ? (
-              <Button variant="contained" size="large">
-                Current Team: {player.team}
-              </Button>
-            ) : (
-              <Button
-                variant="outlined"
-                onClick={handleHint4Click}
-                size="large"
-              >
-                Current Team: ?
-              </Button>
-            )}
-          </div>
-          <div>
             {hint5Clicked ? (
               <Button variant="contained" size="large">
                 {player.draft_year === "Undrafted"
@@ -371,7 +393,6 @@ function Card() {
               </Button>
             )}
           </div>
-          <div className="hint-count-text">Hints: {hints}</div>
         </div>
       ) : null}
     </div>
